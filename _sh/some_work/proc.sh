@@ -13,11 +13,10 @@ fi
 
 eval $(ps -aux --sort=-%cpu -h | awk -v num=0 \
     '{if($3 < 50) {exit} else {num++;printf("cpuproid["num"]=%d;",$2);} } END{printf("cpunum=%d;",num)}')
-echo $cpuproid
 
 eval $(ps -aux --sort=-%mem -h | awk -v num=0 \
     '{if($4 < 50) {exit} else {num++;printf("memproid["num"]=%d;",$2);} } END{printf("memnum=%d;",num)}')
-echo $cpunum
+
 if [[ $cpunum -gt 0 || $memnum -gt 0 ]]; then
     sleep 5
     else
@@ -48,7 +47,7 @@ if [[ $memnum -gt 0 ]]; then
 	    END {printf(memchecknum=%d;",num)}') 
     done
 fi  
-echo $memchecknum
+
 if [[ $cpuchecknum -gt 0 ]]; then
     for (( i = 1; i <= $cpuchecknum; i++ )); do
 	echo "$NowTime ${cpuproname[$i]} ${cpuproid[$i]} ${cpuprouser[$i]} \
@@ -64,4 +63,3 @@ if [[ $memchecknum -gt 0 ]]; then
     
 fi
 
-echo ${memchecknum}
